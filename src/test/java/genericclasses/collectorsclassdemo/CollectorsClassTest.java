@@ -12,7 +12,7 @@ public class CollectorsClassTest {
 
         List<CitiesCollectors> citiesList = new ArrayList<>();
         citiesList.add(new CitiesCollectors("New Delhi", 33.5));
-        citiesList.add(new CitiesCollectors("Mexico", 12));
+        citiesList.add(new CitiesCollectors("Kinshasa", 43));
         citiesList.add(new CitiesCollectors("New York", 13));
         citiesList.add(new CitiesCollectors("Dubai", 47));
         citiesList.add(new CitiesCollectors("London", 15));
@@ -50,6 +50,10 @@ public class CollectorsClassTest {
 
         List<Double> tempList = citiesCollectorsList.stream().filter(cities -> cities.getTemperature() > 30).map(cities -> cities.getTemperature()).collect(Collectors.toList());
         System.out.println("The highest Temperatures are: \n" + tempList);
+
+        System.out.println("\nCities with Temperatures less than 5 Degrees are: ");
+        System.out.println(prepareTemperature().stream().filter(city -> city.getTemperature() < 5).collect(Collectors.toList()));
+        System.out.println();
     }
 }
 
