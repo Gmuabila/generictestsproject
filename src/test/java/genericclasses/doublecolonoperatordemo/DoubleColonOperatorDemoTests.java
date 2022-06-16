@@ -54,4 +54,13 @@ public class DoubleColonOperatorDemoTests {
         //st2.forEach(dc::instanceFunction);   //Also works when calling the method from the object.
         System.out.println();
     }
+
+    @Test
+    public void doubleColonOperatorTest5(){
+        // Java code to show use of double colon operator for class constructor
+        Stream<String> str = Stream.of("Hey", "It's all", "Good");
+        // call the class constructor
+        // using double colon operator
+        str.forEach(DoubleColon::new);
+    }
 }
