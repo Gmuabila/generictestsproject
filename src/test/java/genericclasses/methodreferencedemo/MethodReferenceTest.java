@@ -19,6 +19,7 @@ public class MethodReferenceTest {
 //        messages.forEach(word -> word.toUpperCase());  //Does not convert Strings to UpperCase.  To investigate.
 //        System.out.println(messages);
 
+        //Capitalizing and printing a list of Strings
         List<String> messagesToUpperCase = messages.stream().map(String::toUpperCase).collect(Collectors.toList());
         System.out.println(messagesToUpperCase);
     }
