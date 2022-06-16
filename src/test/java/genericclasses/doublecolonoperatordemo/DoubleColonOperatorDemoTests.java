@@ -38,7 +38,7 @@ public class DoubleColonOperatorDemoTests {
         List<String> st = Arrays.asList("It's", "OK", "to be", "here", "forever");
 
         System.out.println("Printing a list of Strings using double colon operator:");
-        st.forEach(DoubleColon::someFunction);
+        st.forEach(DoubleColon::classFunction);
         System.out.println();
     }
 
@@ -46,6 +46,7 @@ public class DoubleColonOperatorDemoTests {
     public void doubleColonOperatorTest4(){
         // Java code to show use of double colon operator for "instance methods"
         List<String> st2 = Arrays.asList("Thanks", "For", "being there", "for me");
+        //Stream<String> st3 = Stream.of("Thank you", "For", "being there", "for me"); //Also works with Streams
         DoubleColon dc = new DoubleColon();
 
         System.out.println("Printing list of Strings using double colon operator \nfor instance method:");
