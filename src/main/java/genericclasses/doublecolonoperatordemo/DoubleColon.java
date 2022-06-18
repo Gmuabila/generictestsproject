@@ -1,5 +1,7 @@
 package genericclasses.doublecolonoperatordemo;
 
+import java.math.BigDecimal;
+
 public class DoubleColon {
 
     private String s;
