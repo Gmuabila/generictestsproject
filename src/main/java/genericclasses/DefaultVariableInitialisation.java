@@ -4,7 +4,6 @@ public class DefaultVariableInitialisation {
         int number;         // number will have default value: 0
         float ratio;        // default value: 0.0
         boolean success;    // default value: false
-
         String name;        // default: null
         Object obj;         // default: null
 

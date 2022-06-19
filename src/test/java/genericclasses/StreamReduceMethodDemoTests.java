@@ -12,6 +12,7 @@ public class StreamReduceMethodDemoTests {
     public void streamReduceMethodTest(){
 
         List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        //List<String> stringsList = Arrays.asList("Monday", "Tuesday", "Wednesda", "Thursday", "Friday", "Saturday", "Sunday");
 
         int result = integerList.stream().reduce(1, (a, b) -> (a + b));
         System.out.println("List (1, 2, 3, 4, 5, 6, 7, 8, 9)");
