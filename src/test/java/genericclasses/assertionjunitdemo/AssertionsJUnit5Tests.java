@@ -2,6 +2,7 @@ package genericclasses.assertionjunitdemo;
 
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.function.BooleanSupplier;
@@ -79,7 +80,7 @@ public class AssertionsJUnit5Tests {
     }
 
     @Test
-    public void assertSameTest(){
+    public void assertSameTest() {
         //When we want to assert that the expected and the actual refer to the same Object,
         // we must use the assertSame assertion:
         String language = "Java";

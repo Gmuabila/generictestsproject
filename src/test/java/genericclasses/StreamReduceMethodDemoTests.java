@@ -41,7 +41,12 @@ public class StreamReduceMethodDemoTests {
         System.out.println("List (1, 2, 3, 4, 5, 6, 7, 8, 9)");
         List<Integer> result6 = integerList.stream().filter(number -> number % 2 == 0).map(number -> number * 2).collect(Collectors.toList());
         System.out.println("Each even number times 2 is: " + result6);
+        System.out.println();
 
-
+        //int[] numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        //int sum2 = Arrays.stream(numbers).reduce(0, Integer::sum);
+        int sum4 = integerList.stream().reduce(0, (Integer::sum));
+        System.out.println("List (1, 2, 3, 4, 5, 6, 7, 8, 9)");
+        System.out.println("The Sum of all elements using :: is: " + sum4);
     }
 }
