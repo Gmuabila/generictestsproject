@@ -28,5 +28,15 @@ public class TestCreateCity {
         assertEquals("Kinshasa", city2.getName());
         assertEquals("Lemba", city2.getCity());
         assertEquals("DR Congo", city2.getState());
+
+        Country country = city2;
+        System.out.println();
+        System.out.println("Converting subclass to superclass...");
+        System.out.println(country);
+
+        City city3 = (City) country;
+        System.out.println();
+        System.out.println("Converting super class to subclass...");
+        System.out.println(city3);
     }
 }

@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
         }                                                   //Note: As we know well that default constructor is provided by compiler automatically if
                                                             //there is no constructor. But, it also adds super() as the first statement.
         public void printColor(){
-            	System.out.println("Colour for Dog (Child Class) is: " + color);//prints color of Dog class
+            	System.out.println("Colour for Dog (Child Class) is: " + this.color);//prints color of Dog class
             	System.out.println("Colour for Animal (Parent Class) is: " + super.color);//prints color of Animal class.
                                                                 // We can use "super" keyword to access the data member or field of parent class.
                                                                 //It is used if parent class and child class have same fields.
