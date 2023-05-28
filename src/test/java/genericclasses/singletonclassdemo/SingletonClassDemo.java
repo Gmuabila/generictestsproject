@@ -50,4 +50,10 @@ public class SingletonClassDemo {
         System.out.println("String from z is " + z.s);
 
     }
+
+    @Test
+    public void singletonClassDemoTestTwo(){
+        //This test demonstrates that it is not possible to instantiate a Singleton class.
+       // Singleton w = new Singleton();  //Error: Singleton has private access in genericclasses.singletonclassdemo.Singleton.
+    }
 }

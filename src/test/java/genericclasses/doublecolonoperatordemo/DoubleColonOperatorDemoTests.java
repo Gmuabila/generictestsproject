@@ -7,16 +7,21 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class DoubleColonOperatorDemoTests {
+        /*The :: operator (double colon operator) in java, also known as Method reference operator in Java,
+    is used to call a method by referring to it with the help of its class directly.
+    They behave exactly as the lambda expressions. The only difference it has from lambda expressions is that
+    this uses direct reference to the method by name instead of providing a delegate to the method.
+     */
 
     @Test
-    public void doubleColonOperatorTest(){
+    public void printWithoutDoubleColonOperator(){
         //To print the elements of Stream without using double colon operator
         //To print all elements of the stream using Lambda expression
         Stream<String> s = Stream.of("Here", "We",
                                     "Go", "Again",
                                     "Mistery", "Victory");
 
-        System.out.println("Printing Stream of String using Lambda expression:");
+        System.out.println("Printing Stream of Strings using Lambda expression:");
         s.forEach(item -> System.out.println(item));
         System.out.println();
 

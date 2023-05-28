@@ -30,4 +30,13 @@ public class City extends Country{
     public void setCity(String city) {
         this.city = city;
     }
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "state='" + state + '\'' +
+                ", city='" + city + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

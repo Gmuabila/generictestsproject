@@ -85,5 +85,6 @@ public class CollectorsClassTest {
         System.out.println("\nUsing grouping....the result is a Map");
         System.out.println(prepareTemperature().stream().collect(Collectors.groupingBy(CitiesCollectors::getName)));
     }
+    
 }
 
