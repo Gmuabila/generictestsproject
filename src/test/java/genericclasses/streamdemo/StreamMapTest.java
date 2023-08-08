@@ -6,6 +6,7 @@ import storm.TaxCalculator;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class StreamMapTest {
 
@@ -20,9 +21,23 @@ public class StreamMapTest {
 
         List<Integer> returnedMap = numbers.stream().map(num -> num * 2).collect(Collectors.toList());  //Find out .collect(Collectors.toList())
         System.out.println(returnedMap);
+    }
+
+    @Test
+    public void mapTestingTwo(){
+        final String sample = "To God be the Glory";
+        // converting to Ascii
+        IntStream intstreams = sample.chars();
+        // All match to check if all Ascii value greater than 100
+        boolean answer = intstreams.allMatch(asciiCode -> asciiCode > 100);
+        System.out.println("Ascii codes greater than 100: " + answer);
         System.out.println();
-        float f = TaxCalculator.taxRate;
-        System.out.println("taxRate is: " + f);
+        // Need to initialize the stream again
+        // to avoid runtime exception
+        intstreams = sample.chars();
+        // All match to check if all Ascii value greater than 31
+        answer = intstreams.allMatch(asciiCode -> asciiCode > 31);
+        System.out.println("Ascii codes greater than 31: " + answer);
 
     }
 }

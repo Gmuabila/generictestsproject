@@ -42,12 +42,12 @@ public class CarOwner {
         this.cars = cars;
     }
 
-//    @Override
-//    public String toString() {
-//        return "CarOwner{" +
-//                "firstName='" + firstName + '\'' +
-//                ", lastName='" + lastName + '\'' +
-//                ", cars=" + cars +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "CarOwner{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", cars=" + cars +
+                '}';
+    }
 }

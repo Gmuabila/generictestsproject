@@ -12,7 +12,7 @@ public class SubstringDemo {
         // In case of substring() method startIndex is inclusive and endIndex is exclusive.
 
         String str = "hello";
-        System.out.println(str.substring(0,5));
+        System.out.println("str.substring(0,4) is: " + str.substring(0,4));
 
         String time = "05:37 AM";
         String substringTime = time.substring(0, 5);
@@ -25,8 +25,9 @@ public class SubstringDemo {
     public void substringTestTwo(){
         String s ="IamthemanInTheHouse";
         System.out.println("Original String: " + s);
-        System.out.println("Substring starting from index 6: " +s.substring(6));  //Should print: manIntTheHouse
-        System.out.println("Substring starting from index 0 to 9: "+s.substring(0,9)); //Should print: Iamtheman
+        System.out.println("Substring starting from index 6: " + s.substring(6));  //Should print: manIntTheHouse
+        System.out.println("Substring starting from index 0 to 9: "+ s.substring(0,9)); //Should print: Iamtheman
         System.out.println("Extracting Substring from index 7 to 11: " + s.substring(6, 11)); //Should print: manIn
+        System.out.println("Extracting Substring from index 9: " + s.substring(9)); //Should print: InTheHouse
     }
 }

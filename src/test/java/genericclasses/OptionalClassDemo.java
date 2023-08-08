@@ -19,11 +19,10 @@ public class OptionalClassDemo {
         String[] Words = new String[10];
         String word = Words[5].toLowerCase();  //Will throw a NullPointerException.  Words[5] is Null.
         System.out.println(word);
-
     }
 
     //ofNullable(T value)
-    //ofNullable(T value) method returns an Optional describing the specified value, if non-null, otherwise returns an empty Optional.
+    //ofNullable(T value) method returns an Optional describing the specified value if non-null, otherwise returns an empty Optional.
 
     @Test
     public void testOptionalClassTwo() {
@@ -39,15 +38,22 @@ public class OptionalClassDemo {
         } else {
             System.out.println("The word is Null");
         }
+
         //The findFirst() method (of the Stream class) returns an Optional describing the first element of this stream,
         //or an empty Optional if the stream is empty. If the stream has no encounter order, then any element may be returned.
         //It throws a NullPointerException if the element selected is null.
+        System.out.println();
         Optional<String> wordCheck = Stream.of(words).findFirst();
         System.out.println("Trying to print an optional: " + wordCheck.toString());
         String wordResult = wordCheck.get();  //Getting a String value from Optional.  When casting to String is used, the compiler complains.
         System.out.println();
         System.out.println("Optional is converted to String: " + wordResult);
     }
+
+        //of()
+        //The of() method accepts a value as parameter of type T to create an Optional instance with this value and
+        //returns an instance of this Optional class with the specified value of the specified type.
+        //This method throws NullPointerException if the specified value is null.
 
     @Test
     public void testOptionalClassThree() {
@@ -56,7 +62,7 @@ public class OptionalClassDemo {
         Optional<Integer> optionalInteger = Optional.of(345);
         Optional<String> stringOptional = Optional.of("Monday");
         Optional<Integer> integerOpt = Optional.of(null);
-        Optional<String> strOptional = Optional.ofNullable("Sunday");
+        Optional<String> strOptional = Optional.of("Sunday");
 
         System.out.println("Is there a value in this Optional: " + optionalInteger.isPresent());
         System.out.println("\nThe Optional value is: " + optionalInteger);
@@ -85,14 +91,14 @@ public class OptionalClassDemo {
         // creating a string array
         String[] str = new String[5];
 
-        // Setting value for 2nd index
+        // Setting value for 3rd index
         str[2] = "Geeks Classes are coming soon";
 
         // It returns a non-empty Optional
         Optional<String> value = Optional.of(str[2]);
 
         // It returns value of an Optional.
-        System.out.println(value.get());
+        System.out.println("The value is: " + value.get());
 
         try {
             // If value is not present, it throws
@@ -108,5 +114,19 @@ public class OptionalClassDemo {
         // It returns true if value is present,
         // otherwise false
         System.out.println(value.isPresent());
+    }
+
+    @Test
+    public void testOptionalClassSix(){
+        //orElse() method
+        //The orElse() method will return the value present in an Optional object.
+        //If the value is not present, then the passed argument is returned.
+        Optional<Integer> optional1 = Optional.of(1);
+        System.out.println("Optional1 : " + optional1);
+        System.out.println("Value at Optional1 is : " + optional1.orElse(10));
+
+        Optional<Integer> optional2 = Optional.empty();
+        System.out.println("\nOptional2 : " + optional2);
+        System.out.println("Value at Optional2 is : " + optional2.orElse(10));
     }
 }

@@ -5,6 +5,8 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 
 public class IntStreamAndIntStreamOfDemo {
@@ -23,7 +25,7 @@ public class IntStreamAndIntStreamOfDemo {
         //the second parameter. It increments the value of subsequent elements with the step equal to 1.
         //The result doesn't include the last parameter, it is just an upper bound of the sequence.
         IntStream intStream = IntStream.range(500, 550);
-        int[] intArr = intStream.sorted().limit(10).toArray();
+        int[] intArr = intStream.limit(10).toArray();
         for (int i = 0; i < intArr.length; i++){
             System.out.println(intArr[i]);
         }
@@ -60,6 +62,9 @@ public class IntStreamAndIntStreamOfDemo {
         //Next I tried the count (stream.count();) method of the above stream and the following Exception was thrown:
         //java.lang.IllegalStateException: stream has already been operated upon or closed.
         //Tried closing the stream with (stream.close()), no success.  To be investigated.
+        //Answer: A stream cannot be used once a terminal operation has been executed on the stream.  You will have to
+        //initialise the stream once more before using it again.  In this case the sum() method has been invoked on the
+        //Stream and sum() method is a terminal operation.
     }
 
     @Test
@@ -77,5 +82,20 @@ public class IntStreamAndIntStreamOfDemo {
 
         System.out.println("Printing a Stream of a single element: ");
         singleElement.forEach(System.out::println);
+    }
+
+    @Test
+    public void primitiveStreamFromRandomClass(){
+        //Since Java 8, the Random class provides a wide range of methods for generating streams of primitives.
+
+        //Creating a DoubleStream which has 5 elements:
+        Random rdm = new Random();
+        DoubleStream dbStream = rdm.doubles(5);
+        dbStream.forEach(System.out::println);
+        System.out.println();
+        //The following creates an IntStream, which has four elements:
+        IntStream intStr = rdm.ints(10, 100, 300);
+        System.out.println("Printing random Instream from 100 to 300: ");
+        intStr.forEach(System.out::println);
     }
 }

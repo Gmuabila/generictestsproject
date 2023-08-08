@@ -47,7 +47,7 @@ public class Solution_Test  {
 
         String result = solution.run(5, 15, moviesId);
 
-        Assert.assertEquals("Movies to watch must match supplied movies list", result);
+        Assert.assertEquals("3,0,4,1,0,1,1,0,1,1,0,1,1,0,1", result);
     }
 
     @Test
@@ -58,7 +58,7 @@ public class Solution_Test  {
 
         String result = solution.run(5, -1, moviesId);
 
-        Assert.assertEquals("Inconsistent movies to watch size", result);
+        Assert.assertEquals("Invalid input arguments", result);
     }
 
     @Test
@@ -69,7 +69,7 @@ public class Solution_Test  {
 
         String result = solution.run(5, 3, moviesId);
 
-        Assert.assertEquals("Invalid movies ids list", result);
+        Assert.assertEquals("Invalid input arguments", result);
     }
 
     @Test
@@ -80,7 +80,7 @@ public class Solution_Test  {
 
         String result = solution.run(-1, 3, moviesId);
 
-        Assert.assertEquals("Invalid movie stack size", result);
+        Assert.assertEquals("Invalid input arguments", result);
     }
 
     @Test
@@ -91,7 +91,7 @@ public class Solution_Test  {
 
         String result = solution.run(5, 0, moviesId);
 
-        Assert.assertEquals("Inconsistent movies to watch size", result);
+        Assert.assertEquals("Invalid input arguments", result);
     }
 
     @Test
@@ -102,6 +102,6 @@ public class Solution_Test  {
 
         String result = solution.run(0, 3, moviesId);
 
-        Assert.assertEquals("Invalid movie stack size", result);
+        Assert.assertEquals("Invalid input arguments", result);
     }
 }

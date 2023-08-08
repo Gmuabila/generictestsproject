@@ -9,6 +9,12 @@ public class ForGenericTests {
 
     @Test
     public void genericTestOne(){
+//        int x = /;
+//        if ((!((Integer) x instanceof Integer))){
+//            System.out.println("Not an Integer");
+//        }else {
+//            System.out.println("An Integer");
+//        }
 
     }
 }

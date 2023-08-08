@@ -165,6 +165,9 @@ public class StreamDemo {
         System.out.println("Printing the original String list: " + stringList);
         System.out.println("\nThe sorted list is: " + sortedList);
         System.out.println("\nPrinting the processed list: " + newStringList);
+        System.out.println();
+        List<String> onceModifiedStream = Stream.of("abcd", "bbcd", "cbcd").skip(1).map(str -> str.substring(0, 3)).collect(Collectors.toList());
+        System.out.println(onceModifiedStream);
     }
 
     @Test
@@ -189,7 +192,7 @@ public class StreamDemo {
         System.out.println();
         //Note that only one element will be returned, as average() will only return one result.
         //So cannot use forEach to loop through, instead ifPresent is used.
-        Arrays.stream (new  int []  {2, 4, 6, 8, 10}).map (x -> x * x).average().ifPresent(System.out::println);
+        Arrays.stream (new  int[]{2, 4, 6, 8, 10}).map (x -> x * x).average().ifPresent(System.out::println);
 
         System.out.println();
         //Stream from Array, sort, filter and print
@@ -205,12 +208,17 @@ public class StreamDemo {
     }
 
     private long counter;
-    private void wasCalled() {
+    private long count;
+    private void filterCalls() {
         counter++;
+    }
+    private void mapCalls(){
+        count++;
     }
 
     @Test
     public void testingStreamEleven(){
+        //Lazy Invocation
         //Intermediate operations are lazy.
         //This means that they will be invoked only if it is necessary for the terminal operation execution.
         // For example, let's call the method wasCalled(), which increments an inner counter every time it's called:
@@ -218,9 +226,10 @@ public class StreamDemo {
         List<String> list = Arrays.asList("abc1", "abc2", "abc3");
         counter = 0;
         Stream<String> stream = list.stream().filter(element -> {
-            wasCalled();
+            filterCalls();
             return element.contains("2");
         });
+        System.out.println("Filter method calls: " + counter);
         //As we have a source of three elements, we can assume that the filter() method will be called three times,
         // and the value of the counter variable will be 3. However, running this code doesn't change counter at all,
         // it is still zero, so the filter() method wasn't even called once. This is because the terminal operation is missing.
@@ -232,17 +241,21 @@ public class StreamDemo {
         // We will also add the ability to track the order of method calls with the help of logging
         List<String> list = Arrays.asList("abc1", "abc2", "abc3");
        counter = 0;
-        Optional<String> stream = list.stream().filter(element -> {
+       count = 0;
+        Optional<String> strFirst = list.stream().filter(element -> {
             //Calling wasCalled() method to test as we couldn't get the logging to work
-            wasCalled();
+            filterCalls();
            // log.info("filter() was called");
             return element.contains("2");
         }).map(element -> {
             //Calling wasCalled() method to test as we couldn't get the logging to work
-            wasCalled();
+            mapCalls();
           //  log.info("map() was called");
             return element.toUpperCase();
         }).findFirst();
+        System.out.println(strFirst.get());
+        System.out.println("Filter method calls: " + counter);
+        System.out.println("Map method calls: " + count);
         /*The results show that the filter() method was called twice and the map() method once.
         This is because the pipeline executes vertically. In our example, the first element of the
         stream didn't satisfy the filter's predicate. Then the filter() method was invoked for the second element,
@@ -257,18 +270,21 @@ public class StreamDemo {
         //This is a repeat of the above test with some changes
         List<String> list = Arrays.asList("abc1", "abc3", "abc2", "abc4", "cbd2", "bdc5");
         counter = 0;
+        count = 0;
         List<String> resultList = list.stream().filter(element -> {
             //Calling wasCalled() method to test as we couldn't get the logging to work
-            wasCalled();
+            filterCalls();
             // log.info("filter() was called");
             return element.contains("2");
         }).map(element -> {
             //Calling wasCalled() method to test as we couldn't get the logging to work
-            wasCalled();
+            mapCalls();
             //  log.info("map() was called");
             return element.toUpperCase();
         }).collect(Collectors.toList());
         System.out.println(resultList);
+        System.out.println("Filter method calls: " + counter);
+        System.out.println("Map method calls: " + count);
 
         //The filter() method was called 6 times, going through all the elements of the list and check was done
         //if elements satisfied the filters check.  Only 2 elements did satisfy the filter() method check.  Each time
@@ -283,15 +299,18 @@ public class StreamDemo {
     public void testingStreamFourteen(){
         List<Integer> integerList = Stream.of(1, 2, 3, 4, 5).collect(Collectors.toList());
         counter = 0;
+        count = 0;
         List<Integer> processedList = integerList.stream().filter(element -> {
-            wasCalled();
+            filterCalls();
             return element % 2 == 0;
         }).map(element -> {
-            wasCalled();
+            mapCalls();
             return element * 2;
         }).collect(Collectors.toList());
 
         System.out.println(processedList);
+        System.out.println("Filter method calls: " + counter);
+        System.out.println("Map method calls: " + count);
     }
 
     @Test
@@ -365,6 +384,7 @@ public class StreamDemo {
         System.out.println(carsDetailsList);
         System.out.println();
         System.out.println("List of Cars: ");
+        System.out.println(carsList);
       //  System.out.println(carsStream);
     }
 
@@ -382,7 +402,7 @@ public class StreamDemo {
     @Test
     public void testingStreamNineteen(){
         //flatMap
-        //If you have a stream where every element contains its own sequence of elements and
+        //If you have a stream where every element contains its own sequence of elements, and
         //you want to create a stream of these inner elements, you should use the flatMap() method:
         CarOwner carOwner = new CarOwner();
         carOwner.firstName = "John";
@@ -430,7 +450,43 @@ public class StreamDemo {
         System.out.println(result);
     }
 
+    @Test
+    public void testingStreamTwentyOne(){
+        //findFirst()
+        //Stream method findFirst() returns an Optional (a container object which may or may not contain a
+        //non-null value) describing the first element of this stream, or an empty Optional if the stream is empty.
+        //If the stream has no encounter order, then any element may be returned.
+        //Exception : If the element selected is null, NullPointerException is thrown.
 
+        // Creating a List of Integers
+        List<Integer> list = Arrays.asList(3, 5, 7, 9, 11);
+        // Using Stream findFirst()
+        Optional<Integer> answer = list.stream().findFirst();
+        // if the stream is empty, an empty
+        // Optional is returned.
+        if (answer.isPresent()) {
+            System.out.println(answer.get());
+        }
+        else {
+            System.out.println("no value");
+        }
+        System.out.println();
+        //The list below is empty, the findFirst() method returns an empty optional and does not throw an exception.
+        List<String> emptyStrList = new ArrayList<>();
+        Optional<String> firstElement = emptyStrList.stream().findFirst();
+        System.out.println(firstElement);
+    }
 
+    @Test
+    public void testingStringTwentyTwo(){
+        //create a List from a stream without few elements
+        List<String> stringList = Stream.of("abcd", "bbcd", "cbcd").skip(1).collect(Collectors.toList());
+        System.out.println("String after skipping the first element: " + stringList);
+        System.out.println();
+        //Create a List to substitute every element of the above List with a substring of the first few chars
+        List<String> modifiedList = stringList.stream().map(element -> element.substring(0, 3)).collect(Collectors.toList());
+        System.out.println("Modified list: " + modifiedList);
+    }
 
 }
+

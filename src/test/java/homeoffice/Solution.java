@@ -1,53 +1,48 @@
 package homeoffice;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Solution {
 
-    public static final int TOTAL_MOVIES = 100000;
-    public static final int MINIMUM_TO_WATCH = 1;
-    public List<Integer> movieStack = new ArrayList<>();
+    private final Stack<Integer> movieStack = new Stack<>();
 
-    public String run(int stackSize, int moviesToWatch, int[] movies) {
+    public String run(int n, int m, int[] movies) {
 
-        String validationErrorMessage = validateMovieToWatchRequest(stackSize, moviesToWatch, movies);
+        boolean valid = validateMovieToWatchRequest(n, m, movies);
 
-        if (validationErrorMessage != null) {
-            return validationErrorMessage;
+        if (!valid) {
+            return "Invalid input arguments";
         }
 
-        initializeMovies(stackSize);
+        initializeMovies(n);
 
-        List<String> resultList = processMovieToWatch(movies);
-
-        String result = resultList.stream().collect(Collectors.joining(","));
-
-        return result;
+        return processMovieToWatch(m, movies);
     }
 
     /*
     The processMovieToWatch() method adds the initialised list of movies to a stack, removes the movie to watch from the
     stack, places it at the top of the stack and calculate the position of the movies.
      */
-    private List<String> processMovieToWatch(int[] movies) {
+    private String processMovieToWatch(int m, int[] movies) {
 
-        List<String> resultList = new ArrayList<>();
-        Stack<Integer> numberStack = new Stack<>();
-        Collections.reverse(movieStack);
-        numberStack.addAll(movieStack);
+        AtomicInteger movieCount = new AtomicInteger(0);
 
-        Arrays.stream(movies).forEach(movie -> {
-            if (numberStack.lastIndexOf(movie) >= 0) {
-                List<Integer> integerList = numberStack.subList(numberStack.lastIndexOf(movie) + 1, numberStack.size());
-                resultList.add(String.valueOf(integerList.size()));
-                numberStack.remove(numberStack.lastIndexOf(movie));
-                numberStack.push(movie);
-            }
-        });
-
-        return resultList;
+        return IntStream.rangeClosed(1, m)
+                .map(movie -> {
+                    int currentMovieId = movies[movieCount.get()];
+                    int stackIndex = movieStack.indexOf(currentMovieId);
+                    movieStack.remove(stackIndex);
+                    movieStack.add(0, currentMovieId);
+                    if (movieCount.incrementAndGet() >= movies.length) {
+                        movieCount.set(0);
+                    }
+                    return movieStack.subList(0, stackIndex).size();
+                })
+                .mapToObj(String::valueOf)
+                .collect(Collectors.joining(","));
     }
 
     /*
@@ -56,23 +51,14 @@ public class Solution {
      */
     private void initializeMovies(int movieStackSize) {
         if (movieStack.size() == 0) {
-            IntStream.rangeClosed(1, movieStackSize).forEach(number -> movieStack.add(number));
+            IntStream.rangeClosed(1, movieStackSize).forEach(movieStack::add);
         }
     }
 
-    //Method to validate inputs and provide error message.
-    private String validateMovieToWatchRequest(int stackMovies, int moviesToWatch, int[] movies) {
-        String errorMessage = null;
-        if(stackMovies < MINIMUM_TO_WATCH){
-            errorMessage = "Invalid movie stack size";
-        }else if(movies == null || movies.length == 0){
-            errorMessage = "Invalid movies ids list";
-        }else  if(moviesToWatch < MINIMUM_TO_WATCH || moviesToWatch > TOTAL_MOVIES){
-            errorMessage =  "Inconsistent movies to watch size";
-        }else  if(moviesToWatch != movies.length){
-            errorMessage =  "Movies to watch must match supplied movies list";
+    private boolean validateMovieToWatchRequest(int n, int m, int[] movies) {
+        if(n > 0 && m > 0 && movies.length > 0) {
+            return m <= 100000;
         }
-
-        return errorMessage;
+        return false;
     }
 }

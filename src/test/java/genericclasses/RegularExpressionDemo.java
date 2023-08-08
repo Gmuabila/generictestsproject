@@ -9,6 +9,25 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class RegularExpressionDemo {
+    //Regular Expression
+    //A regular expression is a sequence of characters that forms a search pattern.
+    //When you search for data in a text, you can use this search pattern to describe what you are searching for.
+    //A regular expression can be a single character, or a more complicated pattern.  Regular expressions can be used to
+    //perform all types of text search and text replace operations.  Java does not have a built-in Regular Expression class,
+    //but we can import the java.util.regex package to work with regular expressions.
+    //The package includes the following classes:
+    //•	Pattern class: Defines a pattern (to be used in a search).  Pattern object is a compiled regex.
+    // The Pattern class provides no public constructors.  To create a pattern, we must invoke its public static compile() method,
+    // which will then return a Pattern object. This method accept a regular expression as the first argument.
+    //•	Matcher class: is used to search for the pattern.  Matcher object interprets the pattern and
+    // performs match operations against an input String. It also defines no public constructors.
+    // We obtain a Matcher object by invoking the matcher method on a Pattern object.
+    //•	PatternSyntaxException class: Indicates syntax error in a regular expression pattern.
+    // PatternSyntaxException object is an unchecked exception that indicates a syntax error in a regular expression pattern.
+    //
+    //To use regular expressions in Java, we do not need any special setup. The JDK contains a special package java.util.regex
+    //totally dedicated to regex operations. We only need to import it into our code.
+    //Moreover, the java.lang.String class also has inbuilt regex support that we commonly use in our code.
 
     @Test
     public void regularExpressionDemo(){
@@ -23,14 +42,26 @@ public class RegularExpressionDemo {
     }
 
     @Test
+    public void regularExpressionMatchCount(){
+        Pattern pattern = Pattern.compile("w3School", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher("Always go to W3School first to see w3School, and w3School, and always w3School.");
+        int matchCount = 0;
+        while (matcher.find()){
+            System.out.println("Match Found");
+            matchCount++;
+        }
+        System.out.println("Match count: " + matchCount);
+    }
+
+    @Test
     public void testRegexMatchCountDemo(){
         int returnedMatches = regexMatchCountTest("foo", "foofoofoofoofoot");
-
         assertEquals(5, returnedMatches);
     }
 
     @Test
     public void regexUsingDotMetaCh(){
+        //Metacharacters
         //Metacharacters are characters with a special meaning, and they affect the way a pattern is matched,
         // in a way adding logic to the search pattern.  The Java API supports several metacharacters,
         // the most straightforward being the dot “.” which matches any character.
@@ -49,7 +80,7 @@ public class RegularExpressionDemo {
     }
 
     public int regexMatchCountTest(String regex, String matcher){
-        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Pattern pattern = Pattern.compile(regex);
         Matcher matcher1 = pattern.matcher(matcher);
         int matches = 0;
         while (matcher1.find()){
@@ -62,10 +93,14 @@ public class RegularExpressionDemo {
 
     @Test
     public void givenORSet_whenMatchesAny_thenCorrect() {
+        //Character Classes
+        //A character class allows you to match any symbol from a certain character set.
+        //A character class is also called a character set.
+        //OR class
         //Constructed as [abc]. Any of the elements in the set is matched.
-        // If they all appear in the text, each is matched separately with no regard to order.
-        int matches = regexMatchCountTest("[abc]", "ac");
-        assertEquals(2,matches);
+        //If they all appear in the text, each is matched separately with no regard to order.
+        int matches = regexMatchCountTest("[abc]", "acbhhjaa");
+        assertEquals(5, matches);
     }
 
     @Test
@@ -80,6 +115,7 @@ public class RegularExpressionDemo {
 
     @Test
     public void givenNORSet_whenMatchesNon_thenCorrect() {
+        //NOR class
         //The above set is negated by adding a caret as the first element.  This will match any other
         //character that is not included in the bracket.  The expression [^abc] says match characters other than abc.
         int matches = regexMatchCountTest("[^abc]", "g");
@@ -89,7 +125,8 @@ public class RegularExpressionDemo {
 
     @Test
     public void givenNORSet_whenMatchesAllExceptElements_thenCorrect() {
-        //Any character in front of "at" will match.  [^bcr]at, will match a String with any character other than b, c, or r in front of "at",
+        //Any character other than characters in brackets in front of "at" will match.
+        //[^bcr]at, will match a String with any character other than b, c, or r in front of "at",
         //including space.
         int matches = regexMatchCountTest("[^bcr]at", "sat mat eat");
         assertTrue(matches > 0);
@@ -98,10 +135,23 @@ public class RegularExpressionDemo {
 
     @Test
     public void givenUpperCaseRange_whenMatchesUpperCase_thenCorrect() {
-        //We can define a class that specifies a range within which the matched text should fall using a hyphen( - ),
-        // likewise, we can also negate a range.  Matching uppercase letters:
+        //Range class
+        //We can define a class that specifies a range within which the matched text should fall using a hyphen(-),
+        //likewise, we can also negate a range.
+        //Matching uppercase letters:
         int matches = regexMatchCountTest("[A-Z]", "Two Uppercase alphabets 34 overall");
         assertEquals(2, matches);
+    }
+
+    @Test
+    public void testing(){
+        Pattern pattern = Pattern.compile("[A-Z]");
+        Matcher matcher = pattern.matcher("Two Uppercase alphabets 34 overall");
+        int matches = 0;
+        while (matcher.find()){
+            matches++;
+        }
+        System.out.println("Match Found: " + matches);
     }
 
     @Test
@@ -121,13 +171,13 @@ public class RegularExpressionDemo {
     @Test
     public void givenNumberRange_whenMatchesAccurately_thenCorrect() {
         //Matching a given range of numbers:
-        int matches = regexMatchCountTest("[1-5]", "Two Uppercase alphabets 34 overall");
+        int matches = regexMatchCountTest("[1-5]", "Two Uppercase alphabets 34 overall");  //Both 1 and 5 inclusive.
         assertEquals(2, matches);
     }
 
     @Test
     public void givenNumberRange_whenMatchesAccurately_thenCorrect2(){
-        // Matching another range of numbers.  The Regex expression 3[0-5] will create the following number: 30, 31, 32, 34, 35 to
+        // Matching another range of numbers.  The Regex expression 3[0-5] will create the following numbers: 30, 31, 32,33, 34, 35 to
         //match against the String "Two Uppercase alphabets 34 overall" which will return only one match 34.
         int matches = regexMatchCountTest("3[0-5]", "Two Uppercase alphabets 34 overall");
         assertEquals(1, matches);
@@ -155,8 +205,8 @@ public class RegularExpressionDemo {
         //Subtraction Class
         //We can use subtraction to negate one or more character classes,
         // for example matching a set of odd decimal numbers.
-        //The result of the Regex [0-9&&[^2468]] is: 1,3,5,7,9 and is matched with the string "123456789"
-        //and the result is 5 matches which are 1,3,5,7,9.
+        //The result of the Regex [0-9&&[^2468]] is: 1,3,5,7,9 when matched with the string "123456789",
+        //the result is 5 matches which are 1,3,5,7,9.
         int matches = regexMatchCountTest("[0-9&&[^2468]]", "123456789");
         assertEquals(5, matches);
     }
@@ -177,13 +227,15 @@ public class RegularExpressionDemo {
     @Test
     public void givenNonDigits_whenMatches_thenCorrect() {
         //Matching non-digits, \\D equivalent to [^0-9] :
-        int matches = regexMatchCountTest("\\D", "a6cw");
-        assertEquals(3, matches);
+        int matches = regexMatchCountTest("\\D", "a6c");
+        assertEquals(2, matches);
+//        int matches = regexMatchCountTest("\\-?\\d+", "-1");
+//        assertEquals(1, matches);
     }
 
     @Test
     public void givenWhiteSpace_whenMatches_thenCorrect() {
-        // Matching white space:
+        // Matching white space characters:
         int matches = regexMatchCountTest("\\s", "a  c");
         assertEquals(2, matches);
     }
@@ -209,6 +261,8 @@ public class RegularExpressionDemo {
         //Other special characters such as !,are not considered a word character and are therefore not matched.
         int matches = regexMatchCountTest("\\w", "hi A 25!");
         assertEquals(5, matches);
+//        int matches = regexMatchCountTest("[a-zA-Z_0-9]", "hi A 25!");
+//        assertEquals(5, matches);
     }
 
     @Test
@@ -424,5 +478,14 @@ public class RegularExpressionDemo {
         String result4 = inputString.replaceAll("\\s", " ");
         System.out.println("\nReplace whitespace with s: ");
         System.out.println("The s result is: \n" + result4);
+    }
+
+    @Test
+    public void testForSolutionHomeOffice(){
+        int stackMovies = -9;
+        if (Pattern.matches("\\-?\\d+", "\"" + stackMovies + "\"")){
+            System.out.println("Wrong character");
+        }
+       // if(Pattern.matches("\\d+", (CharSequence) myObject);)==true)
     }
 }
