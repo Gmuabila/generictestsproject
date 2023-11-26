@@ -24,4 +24,13 @@ public class Student{
 //    public int compareTo(Student otherStudent){
 //        return Integer.compare(this.rollno, otherStudent.rollno);
 //    }
+    @Override
+    public boolean equals(Object obj){
+        if(this == obj)
+        return true;
+        if(obj == null || this.getClass() != obj.getClass())
+        return false;
+        Student student = (Student) obj;
+        return (this.rollno == student.rollno && this.name.equals(student.name) && this.address.equals(student.address));
+    }
 }

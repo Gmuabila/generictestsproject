@@ -2,6 +2,8 @@ package zzzforgenerictests;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+
 public class ForGenericTests {
     //Use this class to test code that has do with access modifiers
     //Note that a class that has a package-private class is still accessible from a corresponding test package, this is why
@@ -16,5 +18,10 @@ public class ForGenericTests {
 //            System.out.println("An Integer");
 //        }
 
+        String[] strArr = new String[]{null, null};
+        Arrays.stream(strArr)
+                .filter(item -> item != null)
+                .map(String::length)          //At this line there is no element in the stream so no NullPointerException will be thrown.
+                .forEach(System.out::println);
     }
 }

@@ -12,11 +12,12 @@ public class StreamDemo {
 
     @Test
     public void testingStreams(){
-        //map() method
-        //The map method is used to return a stream consisting of the results of
-        // applying the given function to the elements of this stream.
-        //The collect() method is used to return the result of the intermediate operations performed on the stream.
-
+        /** map() method
+         The map method is used to return a stream consisting of the results of applying a given function to the elements of this stream.
+         To convert the elements of a Stream by applying a special function to them and to collect these new elements into a new Stream,
+         we use the map() method.  Stream map(Function mapper) is an intermediate operation. These operations are always lazy.
+         Intermediate operations are invoked on a Stream instance and after they finish their processing, they give a Stream instance as output.
+         */
         List<Integer> integerList = Arrays.asList(6, 8, 9, 10, 11);
         List<Integer> integerList1 = Arrays.asList(2, 4, 6, 7, 9);
         List<Integer> squareIntegerList = integerList.stream().map(x -> x * x).collect(Collectors.toList());
@@ -24,14 +25,81 @@ public class StreamDemo {
         System.out.println("The integerList is: \n" + integerList);
         System.out.println("\nThe squareIntegerList is: \n" + squareIntegerList);
         System.out.println("\nThe integerSet is: \n" + integerSet);
+        System.out.println();
+        System.out.println("The stream after applying "
+                + "the function is : ");
+        // Creating a list of Integers
+        List<Integer> list = Arrays.asList(3, 6, 9, 12, 15);
+        // Using Stream map(Function mapper) and
+        // displaying the corresponding new stream
+        list.stream().map(number -> number * 3).forEach(System.out::println);
+    }
 
+    @Test
+    public void testingStreamsB(){
+        System.out.println("The stream after applying "
+                + "the function is : ");
+        // Creating a list of Strings
+        List<String> list = Arrays.asList("geeks", "gfg", "g",
+                "e", "e", "k", "s");
+        // Using Stream map(Function mapper) to
+        // convert the Strings in stream to UpperCase form
+        List<String> answer = list.stream().map(String::toUpperCase).
+                collect(Collectors.toList());
+        // displaying the new stream of UpperCase Strings
+        System.out.println("Strings converted to Uppercase: " + answer);
+        System.out.println();
+
+        System.out.println("The stream after applying "
+                + "the function is : ");
+        // Creating a list of Strings
+        List<String> listStr = Arrays.asList("Geeks", "FOR", "GEEKSQUIZ",
+                "Computer", "Science", "gfg");
+        // Using Stream map(Function mapper) and
+        // displaying the length of each String
+        listStr.stream().map(String::length).forEach(System.out::println);
+    }
+
+    @Test
+    public void testingStreamTwoA(){
+        /** filter()
+         Stream filter(Predicate predicate) returns a stream consisting of the elements of this stream that match the given predicate.
+         This is an intermediate operation. These operations are always lazy i.e., executing an intermediate operation such as filter() does
+         not actually perform any filtering, but instead creates a new stream that, when traversed, contains the elements of the
+         initial stream that match the given predicate.  The filter method is used to select elements as per the Predicate passed as argument.
+         The filter() method allows us to pick a stream of elements that satisfy a predicate.
+         Return Type: A new stream.
+         */
+        // Creating a list of Integers
+        List<Integer> list = Arrays.asList(3, 4, 6, 12, 20);
+        // Getting a stream consisting of the elements that are divisible by 5
+        // Using Stream filter(Predicate predicate)
+        System.out.println("Printing elements divisible by 5: ");
+        list.stream()
+                .filter(num -> num % 5 == 0)
+                .forEach(System.out::println);
+        System.out.println();
+        // Creating a stream of strings
+        Stream<String> stream = Stream.of(
+                "Geeks", "fOr", "GEEKSQUIZ", "GeeksforGeeks");
+        // Getting a stream consisting of the elements having UpperCase Character
+        // at custom index say be it '1'
+        // using Stream filter(Predicate predicate)
+        System.out.println("Printing elements with UpperCase Character at index 1");
+        stream.filter(
+                str -> Character.isUpperCase(str.charAt(1)))
+                .forEach(System.out::println);
+        System.out.println();
+
+        List<String> stringList = Arrays.asList(
+                "Geeks", "fOrT", "GEEKSQUIZ", "GeeksforGeeks");
+        System.out.println("Printing Strings with UpperCase Character at index 3: ");
+        stringList.stream().filter(str -> Character.isUpperCase(str.charAt(3)))
+                .forEach(System.out::println);
     }
 
     @Test
     public void testingStreamsTwo(){
-        //filter() method
-        //The filter method is used to select elements as per the Predicate passed as argument.
-
         List<String> daysOfWeek = Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
         //Filtering days starting with "T"
         List<String> startingWithT = daysOfWeek.stream().filter(s -> s.startsWith("T")).collect(Collectors.toList());
@@ -43,7 +111,6 @@ public class StreamDemo {
         //assertThat(containsEs, contains("Tuesday"));  Not working
         assertEquals(2, containsEs.size());
         assertThat(containsEs, hasItem("Tuesday"));  // AssertThat() is deprecated?
-
 
         System.out.println("Printing daysOfWeek: \n" + daysOfWeek);
         System.out.println("\nPrinting days starting with \"T\": " + startingWithT);
@@ -92,6 +159,9 @@ public class StreamDemo {
         List<Integer> integerList = Arrays.asList(2, 3, 4, 5, 6);
         //Sum of even number in the list.  For uneven numbers use x % 2 != 0.
         int sumOfEvenNumbers = integerList.stream().filter(x -> x % 2 == 0).reduce(0, (ans, i) -> ans + i);
+        //int sumOfEvenNumbers = integerList.stream().filter(x -> x % 2 == 0).reduce(Integer::sum).orElse(0);  //Best way to do this.
+        //    Optional<Integer> sum = integerList.stream().filter(x -> x % 2 == 0).reduce(Integer::sum);  //Can also do this.
+        //       int sumOfEvenNumbers = sum.get();
 
         System.out.println("Printing the list integerList: " + integerList);
         System.out.println("The sum of even numbers is: " + sumOfEvenNumbers);
@@ -131,7 +201,6 @@ public class StreamDemo {
         //double[] arrayDoubles = doubleStr.toArray();
         //Printing the Array elements
 
-
         //Creating IntStream from Random, loop through the IntStream, and print the elements.
         System.out.println();
         System.out.println();
@@ -154,7 +223,7 @@ public class StreamDemo {
     @Test
     public void testingStreamEight(){
         //skip() method
-        //skip() method allows you to skip elements of a stream.  The new Steam will not include skipped elements.
+        //skip() method allows you to skip elements of a stream.  The new Stream will not include skipped elements.
         //To create a new stream from the existing one without few elements, the skip() method can be used:
 
         List<String> stringList = Arrays.asList("Car", "Bike", "Motorcycle", "Boat", "MotorBike");
@@ -190,10 +259,9 @@ public class StreamDemo {
         Arrays.stream(new int[]{2, 4, 6, 8, 10}).map(x -> x * x).forEach(x -> System.out.print(x + ", "));
         System.out.println();
         System.out.println();
+        Arrays.stream (new  int[]{2, 4, 6, 8, 10}).map (x -> x * x).average().ifPresent(System.out::println);
         //Note that only one element will be returned, as average() will only return one result.
         //So cannot use forEach to loop through, instead ifPresent is used.
-        Arrays.stream (new  int[]{2, 4, 6, 8, 10}).map (x -> x * x).average().ifPresent(System.out::println);
-
         System.out.println();
         //Stream from Array, sort, filter and print
         String[] names = new String[]{"Al", "Ankit", "Kushal", "Brent", "Sarka", "Amanda", "Hans"};

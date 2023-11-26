@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 
 public class ExceptionDemo {
+    /** Java Exceptions
     //When executing Java code, different errors can occur: Coding errors made by the programmer,
     //errors due to wrong input, or other unforeseeable things.  When an error occurs, Java will normally stop and generate an error message.
     //The technical term for this is: Java will throw an exception (throw an error).
@@ -20,27 +21,33 @@ public class ExceptionDemo {
     //Errors
     //Errors represent irrecoverable conditions such as Java virtual machine (JVM) running out of memory, memory leaks, stack overflow errors,
     //library incompatibility, infinite recursion, etc. Errors are usually beyond the control of the programmer, and we should not try to handle errors.
+     */
 
     @Test
     public void exceptionTestOne() {
-        //Methods to print the Exception information ********************
-        //
+        /** Methods to print the Exception information ********************
         // 1. printStackTrace()
-        //This method prints exception information in the format of Name of the exception: description of the exception, stack trace.
+        //This method prints the exception information in the format of:
+         Name of the exception: description of the exception,
+         and stack trace.
+         */
         int x = 3;
         int y = 0;
         try {
             System.out.println(x / y);
         } catch (ArithmeticException e) {
             e.printStackTrace();
+            System.out.println();
             System.out.println("Exception has been handled");
         }
     }
 
     @Test
     public void exceptionTestTwo() {
-        // 2. toString()
-        //This method prints exception information in the format of Name of the exception: description of the exception.
+        /** 2. toString()
+         The toString() method prints exception information in the format of:
+         Name of the exception: description of the exception.
+         */
         int a = 5;
         int b = 0;
         try {
@@ -53,8 +60,9 @@ public class ExceptionDemo {
 
     @Test
     public void exceptionTestThree() {
-        // 3. getMessage()
-        //This method prints only the description of the exception.
+        /** 3. getMessage()
+        This method prints only the description of the exception.
+         */
         Object obj = null;
         try {
             System.out.println(obj.toString());

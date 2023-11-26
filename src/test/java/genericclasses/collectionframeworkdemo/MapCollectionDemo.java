@@ -160,7 +160,7 @@ public class MapCollectionDemo {
         mp.put(50, "Fifty");
         System.out.println("Printing Map 'mp': " + mp);
         map.putAll(mp);
-        System.out.println(map);
+        System.out.println("Added Map mp to map: " + map);
     }
 
     @Test

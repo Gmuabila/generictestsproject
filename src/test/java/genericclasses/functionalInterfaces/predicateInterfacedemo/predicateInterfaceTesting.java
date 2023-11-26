@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 public class predicateInterfaceTesting {
     //Predicate functional interface
-    /*The predicate is a predefined functional interface that represents a single argument function that returns a boolean value.
+    /*The predicate is a functional interface that accepts one argument and returns a boolean value.
     It helps with manageability of code, aids in unit-testing, and provides various handy functions.
     With predicates, we can create code that is more clean and readable. Predicates also help to create better tests.
     Predicate in general meaning is a statement about something that is either true or false.
@@ -117,6 +117,25 @@ public class predicateInterfaceTesting {
     }
 
     @Test
+    public void predicateTestFiveB(){
+        //Predicate.and() & Predicate.or()
+        List<String> names = List.of("Carney", "Micheal", "Josh", "Mike", "Jermain", "John", "Monserat");
+        //We will define our Predicates explicitly, and then we'll combine them using Predicate.and(), and Predicate.or().
+        Predicate<String> predicate1 = name -> name.startsWith("M");
+        Predicate<String> predicate2 = name -> name.length() > 4;
+        Predicate<String> predicate3 = name -> name.contains("y");
+        List<String> result = names.stream().filter(predicate1.and(predicate2).or(predicate3)).collect(Collectors.toList());
+        assertEquals(3, result.size());
+        assertTrue(result.contains("Micheal"));
+        assertTrue(result.contains("Monserat"));
+        assertTrue(result.contains("Carney"));
+        assertEquals(true, result.contains("Micheal"));
+        assertEquals(true, result.contains("Monserat"));
+        assertEquals(false, result.contains("Mike"));
+        assertFalse(result.contains("Josh"));
+    }
+
+    @Test
     public void predicateTestSix(){
         //Predicate.negate()
         //Here, we will use a combination of or() and negate() to filter the List by names that start with “M” or
@@ -214,6 +233,8 @@ public class predicateInterfaceTesting {
         System.out.println();
         List<String> result4 = names.stream().filter(predicate1.or(predicate2)).collect(Collectors.toList());
         System.out.println("Name that start with " + "\"" + "A" + "\"" + " or have length less than 5:\n" + result4);
+        assertTrue(result.contains("Adam"));
+        assertEquals(1, result.size());
     }
 
     @Test
