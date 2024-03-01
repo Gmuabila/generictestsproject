@@ -4,6 +4,6 @@ public class UserDefinedFIntMultiplyClass implements UserDefinedFInt<Double, Lon
     @Override
     public Long transform(Double d){
         d *=d;          //d = d * d
-        return Long.valueOf(d.longValue());
+        return Long.valueOf(d.intValue());
     }
 }

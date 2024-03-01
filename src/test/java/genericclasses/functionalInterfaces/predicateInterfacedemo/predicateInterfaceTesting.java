@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
 import static org.junit.Assert.*;
 
 public class predicateInterfaceTesting {
-    //Predicate functional interface
-    /*The predicate is a functional interface that accepts one argument and returns a boolean value.
+    /** Predicate functional interface
+    The predicate is a functional interface that accepts one argument and returns a boolean value.
     It helps with manageability of code, aids in unit-testing, and provides various handy functions.
     With predicates, we can create code that is more clean and readable. Predicates also help to create better tests.
     Predicate in general meaning is a statement about something that is either true or false.
@@ -41,8 +41,8 @@ public class predicateInterfaceTesting {
 
     @Test
     public void predicateTestTwo(){
-        //Multiple Filters
-        //If we wanted to apply multiple Predicates, one option is to simply chain multiple filters
+        /** Multiple Filters
+        If we wanted to apply multiple Predicates, one option is to simply chain multiple filters.*/
         List<String> names = List.of("Carney", "Micheal", "Josh", "Mike", "Jermain", "John", "Monserat");
         List<String> result = names.stream().filter(name -> name.startsWith("M")).filter(name -> name.length() > 4).collect(Collectors.toList());
         assertEquals(2, result.size());
@@ -57,8 +57,8 @@ public class predicateInterfaceTesting {
 
     @Test
     public void predicateTestThree(){
-        //Complex Predicate
-        //Now, instead of using multiple filters, we can use one filter with a complex Predicate.
+        /** Complex Predicate
+        Now, instead of using multiple filters, we can use one filter with a complex Predicate.*/
         List<String> names = List.of("Carney", "Micheal", "Josh", "Mike", "Jermain", "John", "Monserat");
         List<String> result = names.stream().filter(name -> name.startsWith("M") && name.length() > 4 || name.contains("y")).collect(Collectors.toList());
         assertEquals(3, result.size());
@@ -69,19 +69,18 @@ public class predicateInterfaceTesting {
         assertEquals(false, result.contains("Mike"));
         assertEquals(false, result.contains("Josh"));
         assertEquals(false, result.contains("John"));
-
         //We've filtered our list by extracting names that start with “M” and
         //have a length that is greater than 4, or names that contains "y".  We used One filter for all Predicates.
     }
 
     @Test
     public void predicateTestFour(){
-        //Combining Predicates
+        /** Combining Predicates
         //Next, if we don't want to build a complex Predicate using bitwise operations,
         //Java 8 Predicate has useful methods that we can use to combine Predicates.
         //We'll combine Predicates using the methods Predicate.and(), Predicate.or(), and Predicate.negate().
 
-        //Predicate.and()
+        Predicate.and()                                                                                     */
         List<String> names = List.of("Carney", "Micheal", "Josh", "Mike", "Jermain", "John", "Monserat");
         //We will define our Predicates explicitly, and then we'll combine them using Predicate.and()
         Predicate<String> predicate1 = name -> name.startsWith("M");
@@ -98,8 +97,8 @@ public class predicateInterfaceTesting {
 
     @Test
     public void predicateTestFive(){
-        //Predicate.or()
-        //We can also use Predicate.or() to combine Predicates.
+        /** Predicate.or()
+        We can also use Predicate.or() to combine Predicates.                                                         */
         //Let's extract names start with “M”, as well as names with a length that's less than 5
         List<String> names = List.of("Carney", "Micheal", "Josh", "Mike", "Jermain", "John", "Monserat");
         Predicate<String> predicate1 = name -> name.startsWith("M");
@@ -137,7 +136,7 @@ public class predicateInterfaceTesting {
 
     @Test
     public void predicateTestSix(){
-        //Predicate.negate()
+        /** Predicate.negate()                                                                                        */
         //Here, we will use a combination of or() and negate() to filter the List by names that start with “M” or
         //have a length that isn't less than 5.
         List<String> names = List.of("Carney", "Micheal", "Josh", "Mike", "Jermain", "John", "Monserat");
@@ -158,9 +157,9 @@ public class predicateInterfaceTesting {
 
     @Test
     public void predicateTestSeven(){
-        //Combine Predicates Inline
-        //We don't need to explicitly define our Predicates to use and(), or(), and negate().
-        //We can also use them inline by casting the Predicate.  Only need to cast the first Predicate.
+        /** Combine Predicates Inline
+        We don't need to explicitly define our Predicates to use and(), or(), and negate().
+        We can also use them inline by casting the Predicate.  Only need to cast the first Predicate.                 */
         List<String> names = List.of("Carney", "Micheal", "Josh", "Mike", "Jermain", "John", "Monserat");
         List<String> result = names.stream().filter(((Predicate<String>) name -> name.startsWith("M"))
                 .and(name -> name.length() < 5)).collect(Collectors.toList());
@@ -173,9 +172,9 @@ public class predicateInterfaceTesting {
 
     @Test
     public void predicateTestEight(){
-        //Combining a Collection of Predicates
-        //Finally, let's see how to chain a collection of Predicates by reducing them.
-        //In the following example, we have a List of Predicates that we combined using Predicate.and()
+        /** Combining a Collection of Predicates
+        Finally, let's see how to chain a collection of Predicates by reducing them.
+        In the following example, we have a List of Predicates that we combined using Predicate.and()                 */
         List<String> names = List.of("Carney", "Micheal", "Josh", "Mike", "Jermain", "John", "Monserat");
         List<Predicate<String>> allPredicates = new ArrayList<>();
         allPredicates.add(name -> name.startsWith("J"));
@@ -191,8 +190,8 @@ public class predicateInterfaceTesting {
 
     @Test
     public void predicateTestNine(){
-        //Note that in the above example we used our base identity as X -> true.
-        //But that will be different if we want to combine them using Predicate.or()
+        /** Note that in the above example we used our base identity as X -> true.
+        But that will be different if we want to combine them using Predicate.or()                                  */
         List<String> names = List.of("Carney", "Micheal", "Josh", "Mike", "Jermain", "John", "Monserat");
         List<Predicate<String>> allPredicates = new ArrayList<>();
         allPredicates.add(name -> name.startsWith("J"));

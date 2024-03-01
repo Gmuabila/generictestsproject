@@ -24,7 +24,7 @@ public class UserDefinedFunctionalInterfaceTests {
 
     @Test
     public void testTwo(){
-        UserDefinedFInt<Long, Integer> multiply = x -> Integer.valueOf(x.intValue() * 10);  //or: Integer.valueOf((int)(x * 10));
+        UserDefinedFInt<Long, Integer> multiply = x -> x.intValue() * 10;//or: Integer.valueOf((int)(x * 10)), or: Integer.valueOf(x.intValue() * 10)
         Integer result = multiply.transform(4L);
         System.out.println(result);
         UserDefinedFInt.display();
@@ -32,10 +32,12 @@ public class UserDefinedFunctionalInterfaceTests {
     }
 
     //Defining Functional Interface 1
+    @FunctionalInterface
     public interface FuncInter1{
         int operation (int x, int y);
     }
     //Defining Functional Interface 2
+    @FunctionalInterface
     public interface FuncInter2{
         void sayMessage(String message);
     }
@@ -91,16 +93,16 @@ public class UserDefinedFunctionalInterfaceTests {
 
     @Test
     public void testSix(){
-        MathFuncInterface<Integer, Long> add = (a, b) -> Long.valueOf(a + b);
+        MathFuncInterface<Integer, Long> add = (a, b) -> (long) (a + b); //Or: a.LongValue() + b.LongValue()
         Long result = add.operate(4, 7);
         System.out.println("Add Result: " + result);
-        MathFuncInterface<Double, Integer> mutiply = (a, b) -> Integer.valueOf(a.intValue() * b.intValue()); //or: Integer.valueOf((int)(a * b));
-        Integer result2 = mutiply.operate(2D, 5D);
+        MathFuncInterface<Double, Integer> mutiply = (a, b) -> a.intValue() * b.intValue(); //or: Integer.valueOf((int)(a * b));
+        Integer result2 = mutiply.operate(2D, 5D);                                   //Or: Integer.valueOf(a.intValue() * b.intValue())
         System.out.println("Multiply Result: " + result2);
-        MathFuncInterface<Integer, Double> divide = (a, b) -> Double.valueOf(a / b);
+        MathFuncInterface<Integer, Double> divide = (a, b) -> (double) (a / b);
         Double result3 = divide.operate(15, 3);
         System.out.println("Divide Result: " + result3);
-        MathFuncInterface<Long, Integer> substruct = (a, b) -> Integer.valueOf((int) (a - b));
+        MathFuncInterface<Long, Integer> substruct = (a, b) -> (int) (a - b);
         Integer result4 = substruct.operate(12L,6L);
         System.out.println("Substruct Result: " + result4);
     }

@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toSet;
 import static org.junit.Assert.*;
@@ -225,5 +226,117 @@ public class CollectorsDemo {
         //The grouping of elements is done as per the passed classifier function and returns the Collector with result in a Map.
         System.out.println("\nUsing grouping....the result is a Map");
         System.out.println(prepareTemperature().stream().collect(Collectors.groupingBy(CitiesCollectors::getName)));
+    }
+
+    @Test
+    public void testJoiningMethod(){
+        /** joining() method
+         The joining() method of the Collectors Class is used to join various elements of a character or string array into a single string object.
+         This method uses the stream to do so. There are various overloads of joining() methods present in the Collector class.
+         joining()
+         java.util.stream.Collectors.joining() is the simplest joining() method which does not take any parameter.
+         It returns a Collector that joins or concatenates the input streams into String in the order of their appearance.                      */
+        // Creating a custom character array
+        char[] ch = { 'G', 'e', 'e', 'k', 's', 'f', 'o',
+                'r', 'G', 'e', 'e', 'k', 's' };
+        // Converting character array into string
+        // using joining() method of Collectors class
+        String chString = Stream.of(ch)
+                .map(arr -> new String(arr))
+                .collect(Collectors.joining());
+        // Printing concatenated string
+        System.out.println(chString);
+        //In this program, a character list is created. Then this list is fed to be converted into Stream.
+        //Then the characters are converted into Strings, resulted stream is mapped for a sequential series using map().
+        // At last, the sequential stream containing the string list is joined into a single String using Collectors.joining() method.
+        // It is stored in ‘chString’ variable.
+    }
+
+    @Test
+    public void testJoiningMethodB(){
+        /** joining() method                                                                                                                */
+        // Creating a character list
+        List<Character> ch = Arrays.asList(
+                'G', 'e', 'e', 'k', 's', 'f', 'o', 'r', 'G',
+                'e', 'e', 'k', 's');
+        // Converting character list into string
+        // using joining() method of Collectors class
+        String chString = ch.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining());
+        // Printing the concatenated string
+        System.out.println(chString);
+    }
+
+    @Test
+    public void testJoiningMethodC(){
+    /** joining(delimiter)
+     java.util.stream.Collectors.joining(CharSequence delimiter) is an overload of joining() method which takes delimiter as a parameter,
+     of the type CharSequence. A delimiter is a symbol or a CharSequence that is used to separate words from each other. For example,
+     in every sentence, space ‘ ‘ is used as the default delimiter for the words in it. It returns a Collector that joins or concatenates the
+     input elements into String in the order of their appearance, separated by the delimiter.                                                   */
+    // Create a character list
+    List<Character> ch = Arrays.asList('G', 'e', 'e', 'k', 's', 'f',
+            'o', 'r', 'G', 'e', 'e', 'k', 's');
+    // Convert the character list into String using Collectors.joining() method
+    // with, as the delimiter
+    String chString = ch.stream()
+            .map(String::valueOf)
+            .collect(Collectors.joining(", "));
+    // Print the concatenated String
+        System.out.println(chString);
+    }
+
+    @Test
+    public void testJoiningMethodD(){
+        /** joining(delimiter)
+         java.util.stream.Collectors.joining(CharSequence delimiter) is an overload of joining() method which takes a delimiter as a parameter,
+         of the type CharSequence. A delimiter is a symbol or a CharSequence that is used to separate words from each other. For example,
+         in every sentence, space ‘ ‘ is used as the default delimiter for the words in it. It returns a Collector that joins or
+         concatenates the input elements into String in the order of their appearance, separated by the delimiter.                              */
+        // Create a character list
+        List<Character> ch = Arrays.asList('G', 'e', 'e', 'k', 's', 'f',
+                'o', 'r', 'G', 'e', 'e', 'k', 's');
+        // Convert the character list into String using Collectors.joining() method
+        // with, as the delimiter
+        String chString = ch.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(", "));
+        // Print the concatenated String
+        System.out.println(chString);
+    }
+
+    @Test
+    public void testJoiningMethodE(){
+        /** joining(delimiter, prefix, suffix) method
+         The joining(CharSequence delimiter, CharSequence prefix, CharSequence suffix) is an overload of joining() method which takes a delimiter,
+         a prefix, and a suffix as parameter, of type CharSequence. A delimiter is a symbol or a CharSequence that is used to separate words from
+         each other. A prefix is a symbol or a CharSequence that is joined at the starting of the 1st element of the String.
+         Then suffix is also a CharSequence parameter, but this is joined after the last element of the string. i.e. at the end. For example,
+         in every {Geeks, for, Geeks}, space ‘ ‘ is used as the by default delimiter for the words in it. The ‘{‘ is the prefix and ‘}’ is the suffix.
+         It returns a Collector that joins or concatenates the input elements into String in the order of their appearance, separated by the delimiter.
+         Syntax:
+         public static Collector<CharSequence, ?, String> joining(CharSequence delimiter, CharSequence prefix, CharSequence suffix))                     */
+        // Create a character list
+        List<Character> ch = Arrays.asList('G', 'e', 'e', 'k', 's', 'f',
+                'o', 'r', 'G', 'e', 'e', 'k', 's');
+        // Convert the character list into String using Collectors.joining() method
+        // with, as the delimiter
+        String chString = ch.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(", ", "[", "]"));
+        // Print the concatenated String
+        System.out.println(chString);
+    }
+
+    @Test
+    public void testJoiningMethodF(){
+        /** joining(delimiter, prefix, suffix) method                                                                                           */
+        // Create a string list
+        List<String> str = Arrays.asList("Geeks", "for", "Geeks");
+        // Convert the string list into String using Collectors.joining() method
+        String chString = str.stream().collect(Collectors.joining(", ", "{", "}"));
+        // Print the concatenated String
+        System.out.println(chString);
     }
 }

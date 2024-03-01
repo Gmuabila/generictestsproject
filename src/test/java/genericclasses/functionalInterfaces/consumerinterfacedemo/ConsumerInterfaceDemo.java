@@ -7,8 +7,8 @@ import java.util.*;
 import java.util.function.Consumer;
 
 public class ConsumerInterfaceDemo{
-    //Consumer Interface
-    /*The Consumer interface of the functional interface is one that accepts only one argument and
+    /** Consumer Interface
+    The Consumer interface of the functional interface is one that accepts only one argument and
     does not return any value. The consumer interface has no return value. It returns nothing.
     It represents a function which takes in one argument and produces a result.
     The consumer interface contains an abstract accept() and a default andThen() methods.

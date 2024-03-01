@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 public class FunctionInterfaceDemo {
-    /* Function Interface  ******
+    /** Function Interface  ******
     The Java Function interface is one of the most central functional interfaces in Java.
     The Function interface represents a function (method) that accepts a single argument and returns a single value.
     It represents a function which takes in one parameter and produces a result.
@@ -25,6 +25,7 @@ public class FunctionInterfaceDemo {
     @Test
     public void functionInterfaceTestOne(){
         Function<Long, Integer> adder = new AddThree();
+        // AddThree adder = new AddThree(); // Will also work as the class AddThree implements Function Interface.
         Integer result = adder.apply(5L);
         System.out.println("Result: " + result);
         //First this example creates a new AddThree instance and assigns it to a Function variable.

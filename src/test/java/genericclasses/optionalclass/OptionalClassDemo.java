@@ -427,6 +427,39 @@ public class OptionalClassDemo {
         String name = Optional.ofNullable(nullName).orElseThrow();
     }
 
+    /** Difference Between orElse() and orElseGet()                                                                    */
+    //Let’s see and observe the side effects established both where orElse() and orElseGet() overlap and where they differ:
+    public String getMyDefault() {
+        System.out.println("Getting Default Value....");
+        return "Default Value";
+    }
+    @Test
+    public void optionalClassTwelveF(){
+        String text = null;
+        String defaultText = Optional.ofNullable(text).orElseGet(this::getMyDefault);
+        assertEquals("Default Value", defaultText);
+        defaultText = Optional.ofNullable(text).orElse(getMyDefault());
+        assertEquals("Default Value", defaultText);
+        //The getMyDefault() method is called in each case. It so happens that when the wrapped value is not present,
+        //then both orElse() and orElseGet() work exactly the same way.
+    }
+
+    @Test
+    public void optionalClassTwelveG(){
+        String text = "Text present";
+        System.out.println("Using orElseGet:");
+        String defaultText = Optional.ofNullable(text).orElseGet(this::getMyDefault);
+        assertEquals("Text present", defaultText);
+        System.out.println("Using orElse:");
+        defaultText = Optional.ofNullable(text).orElse(getMyDefault());
+        assertEquals("Text present", defaultText);
+        //Notice that when using orElseGet() to retrieve the wrapped value, the getMyDefault() method is not even invoked since the
+        //contained value is present.  However, when using orElse(), whether the wrapped value is present or not,
+        //the default object is created. So, in this case, we have just created one redundant object that is never used.
+        //In this simple example, there is no significant cost to creating a default object, as the JVM knows how to deal with such.
+        //However, when a method such as getMyDefault() has to make a web service call or even query a database, the cost becomes very obvious.
+    }
+
     @Test
     public void optionalClassTestThirteen() {
         /** The findFirst() method (of the Stream class)
@@ -614,7 +647,7 @@ public class OptionalClassDemo {
          Mapping function: is a strategy that starts with a collection of items and runs a function on each item individually to
          compute a new value for that item.
          */
-        String str = new String("Muabila");
+        String str = "Muabila";
         Optional.ofNullable(str).map(x -> x.toUpperCase())
                 .filter(x -> x.contains("A"))
                 .ifPresent(x -> System.out.println("Name: " + x));
@@ -792,40 +825,38 @@ public class OptionalClassDemo {
 
     @Test
     public void optionalClassTestSixteenF(){
-        List<Optional<String>> optionalList = Arrays.asList(
+        List<Optional<String>> optionalStringList = Arrays.asList(
                 Optional.of("hello"),
                 Optional.empty(),
                 Optional.of("world"),
                 Optional.empty(),
                 Optional.of("welcome to"),
-                Optional.of("JavaProgramTo.com"));
-        System.out.println("optionalList values : " + optionalList);
-        List<String> nonEmptyValuesList = optionalList
+                Optional.of("JavaProgram.com"));
+        System.out.println("optionalStringList values : " + optionalStringList);
+        List<String> nonEmptyValuesList = optionalStringList
                 .stream()
                 .flatMap(optional -> optional.isPresent() ? Stream.of(optional.get()) : Stream.empty())
                 .collect(Collectors.toList());
         System.out.println("nonEmptyValuesList: " + nonEmptyValuesList);
         System.out.println();
-        List<Optional<String>> nonEmptyOptionalList = optionalList
+        List<Optional<String>> nonEmptyOptionalList = optionalStringList
                 .stream()
                 .flatMap(opt -> opt.isPresent() ? Stream.of(opt) : Stream.empty())
                 .collect(Collectors.toList());
         System.out.println("nonEmptyOptionalList: " + nonEmptyOptionalList);
 
-        List<Optional<String>> nonEmptyOptList = optionalList
+        List<Optional<String>> nonEmptyOptList = optionalStringList
                 .stream()
                 .filter(opt -> opt.isPresent())
                 .collect(Collectors.toList());
         System.out.println("Non Empty Optionals list: " + nonEmptyOptList);
         System.out.println();
-        List<String> optValuesList = optionalList
+        List<String> optValuesList = optionalStringList
                 .stream()
                 .filter(opt -> opt.isPresent())
                 .map(opt -> opt.get())     //or: flatMap(opt -> Stream.of(opt.get()))
                 .collect(Collectors.toList());
         System.out.println("optValuesList: " + optValuesList);
-
-
     }
 
     @Test
@@ -836,18 +867,50 @@ public class OptionalClassDemo {
         System.out.println("Non-Empty Optional:: " + nonEmptyGender.map(String::toUpperCase));
         System.out.println("Empty Optional    :: " + emptyGender.map(String::toUpperCase));
 
-        Optional<Optional<String>> nonEmptyOtionalGender = Optional.of(Optional.of("male"));
-        System.out.println("Optional value   :: " + nonEmptyOtionalGender);
-        System.out.println("Optional.map     :: " + nonEmptyOtionalGender
+        Optional<Optional<String>> nonEmptyOptionalGender = Optional.of(Optional.of("male"));
+        System.out.println("Optional value   :: " + nonEmptyOptionalGender);
+        System.out.println("Optional.map     :: " + nonEmptyOptionalGender
                 .map(gender -> gender.map(String::toUpperCase)));
-        System.out.println("Optional.flatMap :: " + nonEmptyOtionalGender
+        System.out.println("Optional.flatMap :: " + nonEmptyOptionalGender
                 .flatMap(gender -> gender.map(String::toUpperCase)));
         System.out.println();
-        Optional<Optional<Optional<String>>> nonEmptyOtionalOptional = Optional.of(Optional.of(Optional.of("Female")));
-        System.out.println("Optional.flaMap flatMap: " + nonEmptyOtionalOptional
+        Optional<Optional<Optional<String>>> nonEmptyOptionalOptional = Optional.of(Optional.of(Optional.of("Female")));
+        System.out.println("Optional.flaMap flatMap: " + nonEmptyOptionalOptional
                 .flatMap(gender -> gender.flatMap(value -> value.map(String::toUpperCase))).orElse("Null"));
     }
 
+    @Test
+    public void optionalClassSixteenH(){
+        /** Stream() method
+         The stream() method of the Optional class is used to get the sequential stream of the only value present in this Optional instance.
+         If there is no value present in this Optional instance, then this method returns an empty Stream.
+         Syntax: public Stream<T> stream()
+         Parameters: This method do not accept any parameter.
+         Return value: This method returns the sequential stream of the only value present in this Optional instance.
+         If there is no value present in this Optional instance, then this method returns an empty Stream.
+         Note: Below programs require JDK 9 and above to execute.
+         */
+        // create an Optional
+        Optional<Integer> op = Optional.of(9455);
+        // print value
+        System.out.println("Optional: " + op);
+        // get the Stream
+        System.out.println("Getting the Stream:");
+        op.stream().forEach(System.out::println);
+        System.out.println();
+        // create a Optional
+        op = Optional.empty();
+        // print value
+        System.out.println("Optional: " + op);
+        try {
+            // get the Stream
+            System.out.println("Getting the Stream:");
+            op.stream().forEach(System.out::println);
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+    }
     @Test
     public void optionalClassTestSeventeen(){
         /** ifPresentOrElse() method
@@ -988,38 +1051,5 @@ public class OptionalClassDemo {
         // print value
         System.out.println("String Representation of empty optional: "
                 + val);
-    }
-
-    @Test
-    public void optionalClassTwentyOne(){
-        /** Stream() method
-         The stream() method of the Optional class is used to get the sequential stream of the only value present in this Optional instance.
-         If there is no value present in this Optional instance, then this method returns an empty Stream.
-         Syntax: public Stream<T> stream()
-         Parameters: This method do not accept any parameter.
-         Return value: This method returns the sequential stream of the only value present in this Optional instance.
-         If there is no value present in this Optional instance, then this method returns an empty Stream.
-         Note: Below programs require JDK 9 and above to execute.
-         */
-        // create an Optional
-        Optional<Integer> op = Optional.of(9455);
-        // print value
-        System.out.println("Optional: " + op);
-        // get the Stream
-        System.out.println("Getting the Stream:");
-        op.stream().forEach(System.out::println);
-        System.out.println();
-        // create a Optional
-        op = Optional.empty();
-        // print value
-        System.out.println("Optional: " + op);
-        try {
-            // get the Stream
-            System.out.println("Getting the Stream:");
-            op.stream().forEach(System.out::println);
-        }
-        catch (Exception e) {
-            System.out.println(e);
-        }
     }
 }

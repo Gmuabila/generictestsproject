@@ -7,12 +7,15 @@ import java.util.Collections;
 import java.util.List;
 
 public class ComparatorDemoTests {
-    //Comparator Interface
-    //To sort two objects by an order other than their natural order (or to sort objects of classes that do not implement Comparable at all),
-    //we have to use the java.util.Comparator interface.
-    //The Comparator interface defines the method compare(T o1, T o2) to compare the two passed objects.
-    //The Comparator interface defines a compare(arg1, arg2) method with two arguments that represent compared objects and
-    //works similarly to the Comparable.compareTo() method.
+    /** Comparator interface
+     The Comparator interface is used to order the objects of user-defined classes.  A comparator object is
+     capable of comparing two objects of the same class.
+    To sort two objects by an order other than their natural order (or to sort objects of classes that do not implement Comparable at all),
+    we have to use the java.util.Comparator interface.
+    The Comparator interface defines the method compare(T o1, T o2) to compare the two passed objects.
+    The Comparator interface defines a compare(arg1, arg2) method with two arguments that represent compared objects and
+    works similarly to the Comparable.compareTo() method.
+     */
     @Test
     public void testComparatorOne(){
         Employee emp1 = new Employee();

@@ -139,8 +139,8 @@ public class RegularExpressionDemo {
         //We can define a class that specifies a range within which the matched text should fall using a hyphen(-),
         //likewise, we can also negate a range.
         //Matching uppercase letters:
-        int matches = regexMatchCountTest("[A-Z]", "Two Uppercase alphabets 34 overall");
-        assertEquals(2, matches);
+        int matches = regexMatchCountTest("[A-Z]", "Two Uppercase alphabets 34 Overall");
+        assertEquals(3, matches);
     }
 
     @Test
@@ -259,9 +259,17 @@ public class RegularExpressionDemo {
         //Matching a word character, equivalent to [a-zA-Z_0-9].
         //Each character that make up the word is matched in turn.
         //Other special characters such as !,are not considered a word character and are therefore not matched.
-        int matches = regexMatchCountTest("\\w", "hi A 25!");
+        int matches = regexMatchCountTest("\\w", "hi A 25!?/@:;+=-");
         assertEquals(5, matches);
-//        int matches = regexMatchCountTest("[a-zA-Z_0-9]", "hi A 25!");
+//        int matches = regexMatchCountTest("[a-zA-Z_0-9]", "hi A 25!?/@:;+=-");
+//        assertEquals(5, matches);
+    }
+
+    @Test
+    public void givenWordCharacter_whenMatches_thenCorrectB() {
+        int matches = regexMatchCountTest("\\w+", "hi A 25!?/@:;+=-");
+        assertEquals(3, matches);
+//        int matches = regexMatchCountTest("[a-zA-Z_0-9]", "hi A 25!?/@:;+=-");
 //        assertEquals(5, matches);
     }
 
@@ -271,6 +279,16 @@ public class RegularExpressionDemo {
         //Matches non-word characters including spaces.
         int matches = regexMatchCountTest("\\W", "hi G !$£");
         assertEquals(5, matches);
+//        int matches = regexMatchCountTest("[^a-zA-Z_0-9]", "hi G !$£");
+//        assertEquals(5, matches);
+    }
+
+    @Test
+    public void givenNonWordCharacter_whenMatches_thenCorrectB() {
+        int matches = regexMatchCountTest("\\W+", "hi G !$£p ");
+        assertEquals(3, matches);
+//        int matches = regexMatchCountTest("[^a-zA-Z_0-9]", "hi G !$£");
+//        assertEquals(5, matches);
     }
 
     @Test
@@ -481,11 +499,35 @@ public class RegularExpressionDemo {
     }
 
     @Test
+    public void whenReplaceAllWorks_thenCorrect() {
+        Pattern pattern = Pattern.compile("dog");
+        Matcher matcher = pattern.matcher(
+                "dogs are domestic animals, dogs are friendly");
+        String newStr = matcher.replaceAll("cat");
+        assertEquals("cats are domestic animals, cats are friendly", newStr);
+    }
+
+    @Test
+    public void whenReplaceFirstWorks_thenCorrect() {
+        Pattern pattern = Pattern.compile("dog");
+        Matcher matcher = pattern.matcher(
+                "dogs are domestic animals, dogs are friendly");
+        String newStr = matcher.replaceFirst("cat");
+        assertEquals(
+                "cats are domestic animals, dogs are friendly", newStr);
+    }
+
+    @Test
     public void testForSolutionHomeOffice(){
         int stackMovies = -9;
         if (Pattern.matches("\\-?\\d+", "\"" + stackMovies + "\"")){
             System.out.println("Wrong character");
         }
        // if(Pattern.matches("\\d+", (CharSequence) myObject);)==true)
+        System.out.println(Pattern.matches("foo", "foofoofoo")); //Does not work why?
+            //System.out.println("Match found");
+
+        if (Pattern.compile("foo").matcher("foofoofoo").matches())  //Does not work why?
+            System.out.println("Match found");
     }
 }

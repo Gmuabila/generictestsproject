@@ -5,6 +5,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class MethodReferenceTest {
@@ -12,13 +13,13 @@ public class MethodReferenceTest {
      * A method reference is the shorthand syntax for a lambda expression that contains just one method call.
      * It is a compact and easy form of a lambda expression. Each time when you are using lambda expression
      * to just refer to a method, you can replace your lambda expression with a method reference.
-     * Method references are a special type of lambda expressions. They're often used to
+     * Method references are special type of lambda expressions. They're often used to
      * create simple lambda expressions by referencing existing methods.
      * The method references can only be used to replace a single method of the lambda expression.
      * A code is clearer and shorter if one uses a lambda expression rather than using an anonymous class and
      * one can use method reference rather than using a single function lambda expression to achieve the same.
      * In general, one does not have to pass arguments to a method references.
-     **/
+     */
 
      @Test
     public void methodReferenceTesting(){
@@ -74,10 +75,7 @@ public class MethodReferenceTest {
   Type 1: Reference to a static method
 //  If a lambda expression just call a static method of a class
     (args) -> Class.staticMethod(args)
-
-    Then method reference is like:
-    Class::staticMethod
-*/
+    Then method reference is like: Class::staticMethod                                                                */
     @Test
     public void methodReferenceTestThree(){
         List<Person> personList = new ArrayList<>();
@@ -104,10 +102,7 @@ public class MethodReferenceTest {
   /**    Type 2: Reference to an instance method of a particular object
         If a lambda expression just call a default method of an object:
         (args) -> obj.instanceMethod(args)
-
-        Then method reference is like:
-        obj::instanceMethod
-   */
+        Then method reference is like: obj::instanceMethod                                                            */
     @Test
     public void methodReferenceTestFour(){
         List<Person> personList = new ArrayList<>();
@@ -160,15 +155,36 @@ public class MethodReferenceTest {
      If a Lambda expression is like:
      // If a lambda expression just create an object
      (args) -> new ClassName(args)
-
      Then method reference is like:
      // Shorthand if a lambda expression just create an object
      ClassName::new
 */
+    // Get List of objects of given length and Supplier
+    public static <T> List<T> getObjectList(int length, Supplier<T> objectSupply){
+        List<T> list = new ArrayList<>();
+        for (int i = 0; i < length; i++)
+            list.add(objectSupply.get());
+        return list;
+    }
+
+    public static <T> List<T> getPersonList(int listLength, Supplier<T> personSupplier){
+        List<T> personList = new ArrayList<>();
+        for(int i = 0; i < listLength; i++)
+            personList.add(personSupplier.get());
+        return personList;
+    }
+
     @Test
     public void methodReferenceTestSix(){
-        List<Person> personList = new ArrayList<>();
-        personList.add(new Person("Mamie", 27));
-       // personList.add(Person::new);  //Giving error: "Person is not a functional interface".
+       List<Person> personListOne = getPersonList(4, Person::new);  //Can also do: () -> new Person() for Person::new.
+       personListOne.stream().forEach(System.out::println);
+        System.out.println();
+        // Get person by supplying person supplier, Supplier is
+        // created by person constructor reference
+        List<PersonMRef> personList = getObjectList(5, () -> new PersonMRef());
+        // Print names of personList
+        personList.stream()
+                .map(x -> x.getName())
+                .forEach(System.out::println);
     }
 }

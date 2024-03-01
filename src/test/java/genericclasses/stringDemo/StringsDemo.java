@@ -394,16 +394,33 @@ public class StringsDemo {
 
     @Test
     public void testCreatingNewString(){
-        //When we create a String using double quotes, JVM first looks for the String with the same value in the string pool.
-        //If found, it returns the reference of the string object from the pool. Otherwise, it creates the String object in the
-        //String pool and returns the reference.  JVM saves a lot of memory by using the same String in different threads.
-        //If the new operator is used to create a string, it gets created in the heap memory.  By creating a String with a new keyword, for example:
-        //String s=new String(“Welcome”);
-        //JVM creates two objects, one in the String pool (if the same value is not found in the String pool) and another in the heap,
-        //and one reference variable where the variable 's' will refer to the object in the heap.
-        //Note: If you want to compare the value of two String variables, you can’t use ==. This is due to the fact that the == operator will
+        /** String Pool
+         String Pool is a storage area in the heap memory where string literals are stored. String Pool in java is a pool of Strings stored in
+         Java Heap Memory.  The Java string constant pool is an area in the heap memory where Java stores literal string values. The heap is an
+         area of memory used for run-time operations.  Java String Pool refers to the collection of Strings which are stored in heap memory.
+         String Pool is a place in the HEAP memory of Java to store string literal.  In this, whenever a new object is created,
+         String pool first checks whether the object is already present in the pool or not. If it is present, then same reference is returned to
+         the variable else a new object will be created in the String pool and the respective reference will be returned.
+         The String pool is created to decrease the number of string objects created in the memory.  It allows caching of string objects.
+         This saves a lot of memory for JVM that can be used by other objects. Java String Pool helps in better performance of the
+         application because of reusability. It saves time to create a new string if there is already a string present in the pool with the
+         same value.
+         ** String literal:
+         A String literal is a sequence of characters between quotation marks, such as "string" or "literal". A string literal in Java is
+         basically a sequence of characters from the source character set used by Java programmers to populate string objects or to display text to
+         a user. These characters could be anything like letters, numbers or symbols which are enclosed within two quotation marks.
+         When you use a string literal the string can be interned, but when you use new String (“…”) you get a new string object.
+         In general, you should use the string literal notation when possible as it is easier to read, and it gives the compiler a chance to
+         optimize your code. A string literal should be enclosed in double quotes. Whenever in your code a string literal is assigned to a
+         variable as in String str = “string literal”; , the compiler will create a String object with its value.
+         ** String Pool is a Design Pattern:
+         String Pool is possible only because String is immutable in Java and its implementation of String interning concept. String pool is
+         also an example of Flyweight design pattern. String pool helps in saving a lot of space for Java Runtime, although it takes more time to
+         create the String.
+         //Note: If you want to compare the value of two String variables, you can’t use ==. This is due to the fact that the == operator will
         //compare the references of the variables (compares memory locations) and not the values that are linked to them.
         //To compare the stored values of the Strings you use the method equals.
+         */
         String str1 = "Badinengani";
         String str2 = new String("Badinengani");
         String str3 = "Badinengani";
@@ -437,12 +454,13 @@ public class StringsDemo {
         System.out.println(str1InPool == str2); //Returns true.
         System.out.println();
 
-        String str3 = new String("Janvier");
+        String str3 = new String("Javier");
         String str3Intern = str3.intern();
-        String str4 = "Janvier";
-        String str5 = "Janvier";
-        System.out.println(str3 == str3Intern);
-        System.out.println(str3Intern == str4);
+        String str4 = "Javier";
+        System.out.print("str3 == str3Intern: ");
+        System.out.println(str3 == str3Intern);  // returns false
+        System.out.print("str3Intern == str4: ");
+        System.out.println(str3Intern == str4);   // returns true
         System.out.println("str3 hashcode: " + str3.hashCode());
         System.out.println("str4 hashcode: " + str4.hashCode());
         System.out.println("str3Intern value: " + str3Intern);
@@ -452,10 +470,29 @@ public class StringsDemo {
         String str6 = new String("Melanie");
         String str6InPool = str6.intern();
         String str7 = "Melanie";
-        System.out.println(str6 == str6InPool);
-        System.out.println(str6InPool == str7);
+        System.out.print("str6 == str6InPool: ");
+        System.out.println(str6 == str6InPool);  // returns false
+        System.out.print("str6InPool == str7: ");
+        System.out.println(str6InPool == str7); // returns true
         //System.out.println("str6InPool == str7 is: " + str6InPool == str7); //Compiler does not allow this statement and only accepts the line above.
         //The error is as follow: Condition '"str6InPool == str7 is: " + str6InPool == str7' is always 'false'.
+    }
+
+    @Test
+    public void testStringCharsMethod(){
+        /** String chars() Method
+         The String chars() method returns an IntStream that contains the integer code point values (Unicode or ASCII code) of
+         the characters in the string object. It returns an IntStream that contains the Unicode values of the characters in the String object.
+         This method was added to the String class in Java 9 release.                                                          */
+        String str = "Hello World";
+        str.chars().forEach(System.out::println);
+    }
+
+    @Test
+    public void testStringInterningB(){
+        String str = "Breva";
+        String str2 = new String("Breva").intern();  //Creating a string in heap and at the same time adding to the String pool.
+        System.out.println(str == str2); //returns true.
     }
 
     @Test

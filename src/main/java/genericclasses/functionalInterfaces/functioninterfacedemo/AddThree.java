@@ -10,7 +10,8 @@ public class AddThree implements Function<Long, Integer> {
 //        Integer correctButComplicated = Integer.valueOf(l.intValue());
 //        Integer withBoxing = l.intValue();
 //        Integer terrible = (int) (long) l;
-        return Integer.valueOf(l.intValue());
+       // return Integer.valueOf(l.intValue());
+        return l.intValue();
 //        Integer i = (l.intValue());
 //        return i;
     }
